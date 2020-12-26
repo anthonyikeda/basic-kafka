@@ -1,0 +1,36 @@
+= Basic Message Producer
+Anthony Ikeda <anthony.ikeda@gmail.com>
+Version 0.1.0
+:toc: left
+:icons: font
+
+== Running
+
+To run this client you will need to have kafka setup and configured and add the following topic: `rusty-msgs`
+
+Once the server is started you can run the client with:
+
+[source,bash]
+----
+$ cargo run
+   Compiling rusty-messages v0.1.0 (/Users/anthonyikeda/work/git_cloud/rusty-messages)
+    Finished dev [unoptimized + debuginfo] target(s) in 1.97s
+     Running `target/debug/rusty-messages`
+----
+
+== Perf Test
+
+A quick perf test can be run once you start the application:
+
+[source,bash]
+----
+$ bin/kafka-producer-perf-test.sh \
+  --topic rusty-msgs \
+  --num-records 50000 \
+  --record-size 100 \
+  --throughput -1 \
+  --producer-props acks=1 \
+  bootstrap.servers=localhost:9092 \
+  buffer.memory=67108864 \
+  batch.size=8196
+----
